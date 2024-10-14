@@ -1,0 +1,151 @@
+import tkinter as tk
+
+class RealEstateManagementApp(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Gestion de Projet Immobilier")
+        self.geometry("1400x800")
+        self.configure(bg="#f0f0f0")
+
+        # Barre latérale
+        self.create_sidebar()
+
+        # Zone de contenu principale (Dashboard)
+        self.content_frame = tk.Frame(self, bg="#f0f0f0")  # Fond clair
+        self.content_frame.pack(expand=True, fill="both", padx=10, pady=10)
+
+        # Créer les frames pour chaque section
+        self.frames = {}
+        self.create_frames()
+
+        # Afficher le tableau de bord par défaut
+        self.show_frame("Home")
+
+    def create_sidebar(self):
+        # Création de la barre latérale
+        sidebar = tk.Frame(self, bg="#2c3e50", width=250)
+        sidebar.pack(side="left", fill="y")
+
+        # Boutons de la barre latérale
+        sections = [
+            ("Accueil", "Home"),  # Renvoyer vers le tableau de bord
+            ("Propriétés", "Properties"),
+            ("Documents", "Documents"),
+            ("Finances", "Finances"),
+            ("Tâches", "Tasks"),
+            ("Rapports", "Reports"),
+            ("Paramètres", "Settings")
+        ]
+        
+        for section, frame_name in sections:
+            btn = tk.Button(sidebar, text=section, bg="#34495e", fg="black", 
+                            relief="flat", font=("Arial", 12), padx=10, pady=5, anchor="w",
+                            command=lambda frame=frame_name: self.show_frame(frame))  # Commande pour rediriger
+            btn.pack(fill="x", pady=2)
+
+    def create_frames(self):
+        # Création des frames pour chaque section
+        self.frames["Home"] = self.create_dashboard_frame()
+        self.frames["Properties"] = self.create_properties_frame()
+        self.frames["Documents"] = self.create_documents_frame()
+        self.frames["Finances"] = self.create_finances_frame()
+        self.frames["Tasks"] = self.create_tasks_frame()
+        self.frames["Reports"] = self.create_reports_frame()
+        self.frames["Settings"] = self.create_settings_frame()
+
+        # Ajouter les frames à la zone de contenu
+        for frame in self.frames.values():
+            frame.pack_forget()  # Masquer toutes les frames au départ
+            frame.pack(expand=True, fill="both")
+
+    def show_frame(self, frame_name):
+        # Afficher la frame demandée et masquer les autres
+        for frame in self.frames.values():
+            frame.pack_forget()  # Masquer toutes les frames
+        self.frames[frame_name].pack(expand=True, fill="both")  # Afficher la frame demandée
+
+    def create_dashboard_frame(self):
+        # Frame pour le tableau de bord
+        frame = tk.Frame(self.content_frame, bg="#f0f0f0")  # Assurez-vous que le fond est clair
+        card_frame = tk.Frame(frame, bg="#f0f0f0")  # Assurez-vous que le fond est clair
+        card_frame.pack(pady=20)
+        # Message de bienvenue
+        welcome_label = tk.Label(frame, text="Bienvenue sur votre tableau de bord", 
+                              font=("Arial", 24, "bold"), bg="#f0f0f0", fg="#2c3e50")
+        welcome_label.pack(pady=20)  # Ajouter un espace autour du label
+
+        # Créer les cartes de tableau de bord
+        recent_card = self.create_card(card_frame, "Récent", "Vos éléments récemment ouverts apparaîtront ici.")
+        docs_card = self.create_card(card_frame, "Documents", "Vous n'avez ajouté aucun document.")
+        bookmarks_card = self.create_card(card_frame, "Favoris", "Ajoutez vos liens favoris ici.")
+
+        recent_card.grid(row=0, column=0, padx=10, pady=10)
+        docs_card.grid(row=0, column=1, padx=10, pady=10)
+        bookmarks_card.grid(row=0, column=2, padx=10, pady=10)
+
+        # Zone des dossiers (par exemple : Projets)
+        folder_card = self.create_card(card_frame, "Dossiers", "Projets")
+        folder_card.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky="we")
+
+        return frame
+
+    def create_properties_frame(self):
+        # Frame pour les propriétés
+        frame = tk.Frame(self.content_frame, bg="#f0f0f0")  # Assurez-vous que le fond est clair
+        label = tk.Label(frame, text="Section Propriétés", font=("Arial", 24), bg="#f0f0f0")
+        label.pack(pady=20)
+        return frame
+
+    def create_documents_frame(self):
+        # Frame pour les documents
+        frame = tk.Frame(self.content_frame, bg="#f0f0f0")  # Assurez-vous que le fond est clair
+        label = tk.Label(frame, text="Section Documents", font=("Arial", 24), bg="#f0f0f0")
+        label.pack(pady=20)
+        return frame
+
+    def create_finances_frame(self):
+        # Frame pour les finances
+        frame = tk.Frame(self.content_frame, bg="#f0f0f0")  # Assurez-vous que le fond est clair
+        label = tk.Label(frame, text="Section Finances", font=("Arial", 24), bg="#f0f0f0")
+        label.pack(pady=20)
+        return frame
+
+    def create_tasks_frame(self):
+        # Frame pour les tâches
+        frame = tk.Frame(self.content_frame, bg="#f0f0f0")  # Assurez-vous que le fond est clair
+        label = tk.Label(frame, text="Section Tâches", font=("Arial", 24), bg="#f0f0f0")
+        label.pack(pady=20)
+        return frame
+
+    def create_reports_frame(self):
+        # Frame pour les rapports
+        frame = tk.Frame(self.content_frame, bg="#f0f0f0")  # Assurez-vous que le fond est clair
+        label = tk.Label(frame, text="Section Rapports", font=("Arial", 24), bg="#f0f0f0")
+        label.pack(pady=20)
+        return frame
+
+    def create_settings_frame(self):
+        # Frame pour les paramètres
+        frame = tk.Frame(self.content_frame, bg="#f0f0f0")  # Assurez-vous que le fond est clair
+        label = tk.Label(frame, text="Section Paramètres", font=("Arial", 24), bg="#f0f0f0")
+        label.pack(pady=20)
+        return frame
+
+    def create_card(self, parent, title, content):
+        # Création d'une carte
+        card = tk.Frame(parent, bg="white", width=300, height=200, relief="groove", bd=1)
+        card.pack_propagate(False)
+
+        # Titre de la carte
+        title_label = tk.Label(card, text=title, font=("Arial", 14, "bold"), bg="white", fg="black")
+        title_label.pack(pady=10)
+
+        # Contenu de la carte
+        content_label = tk.Label(card, text=content, font=("Arial", 12), bg="white", fg="gray")
+        content_label.pack(pady=20)
+
+        return card
+
+if __name__ == "__main__":
+    app = RealEstateManagementApp()
+    app.mainloop()
