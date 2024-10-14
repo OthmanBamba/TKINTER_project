@@ -1,0 +1,65 @@
+import tkinter as tk
+from tkinter import ttk
+
+# Fonction pour générer des idées (simulées pour cet exemple)
+def generate_ideas():
+    language = language_combobox.get()
+    difficulty = difficulty_var.get()
+    use_database = database_var.get()
+    use_api = api_var.get()
+
+    # Simuler quelques idées de projet en fonction des sélections
+    ideas = [
+        f"1. {language} project idea - {difficulty} difficulty",
+        "2. Online banking system - Create an online banking system that allows users to manage their bank accounts, transfer funds, and view their transaction history.",
+        "3. Restaurant management system - Design a restaurant management system that allows staff to take orders, track inventory, and manage customer information.",
+    ]
+    
+    # Afficher les idées générées
+    ideas_text.delete(1.0, tk.END)
+    ideas_text.insert(tk.END, "\n".join(ideas))
+
+# Créer la fenêtre principale
+root = tk.Tk()
+root.title("Project Idea Generator")
+root.geometry("600x500")
+root.configure(bg="#2E2E2E")
+
+# Titre
+title_label = tk.Label(root, text="Project Idea Generator", font=("Arial", 20, "bold"), bg="#2E2E2E", fg="white")
+title_label.pack(pady=20)
+
+# Cadre pour les options de sélection
+options_frame = tk.Frame(root, bg="#2E2E2E")
+options_frame.pack(pady=10)
+
+# Langage de programmation
+tk.Label(options_frame, text="Programming Language", font=("Arial", 12), bg="#2E2E2E", fg="white").grid(row=0, column=0, sticky="w")
+language_combobox = ttk.Combobox(options_frame, values=["Python", "Java", "C++", "JavaScript"], state="readonly")
+language_combobox.set("Java")
+language_combobox.grid(row=0, column=1, padx=10, pady=5)
+
+# Difficulté du projet
+tk.Label(options_frame, text="Project Difficulty", font=("Arial", 12), bg="#2E2E2E", fg="white").grid(row=1, column=0, sticky="w")
+difficulty_var = tk.StringVar(value="Medium")
+tk.Radiobutton(options_frame, text="Easy", variable=difficulty_var, value="Easy", bg="#2E2E2E", fg="white", selectcolor="#2E2E2E").grid(row=1, column=1, padx=10, sticky="w")
+tk.Radiobutton(options_frame, text="Medium", variable=difficulty_var, value="Medium", bg="#2E2E2E", fg="white", selectcolor="#2E2E2E").grid(row=1, column=2, padx=10, sticky="w")
+tk.Radiobutton(options_frame, text="Hard", variable=difficulty_var, value="Hard", bg="#2E2E2E", fg="white", selectcolor="#2E2E2E").grid(row=1, column=3, padx=10, sticky="w")
+
+# Fonctionnalités
+tk.Label(options_frame, text="Features", font=("Arial", 12), bg="#2E2E2E", fg="white").grid(row=2, column=0, sticky="w")
+database_var = tk.BooleanVar()
+api_var = tk.BooleanVar()
+tk.Checkbutton(options_frame, text="Database", variable=database_var, bg="#2E2E2E", fg="white", selectcolor="#2E2E2E").grid(row=2, column=1, padx=10, sticky="w")
+tk.Checkbutton(options_frame, text="API", variable=api_var, bg="#2E2E2E", fg="white", selectcolor="#2E2E2E").grid(row=2, column=2, padx=10, sticky="w")
+
+# Bouton pour générer les idées
+generate_button = tk.Button(root, text="Generate Ideas", command=generate_ideas, bg="#3498DB", fg="white", font=("Arial", 12, "bold"), relief="flat")
+generate_button.pack(pady=20)
+
+# Zone de texte pour afficher les idées
+ideas_text = tk.Text(root, height=10, width=60, bg="#333333", fg="white", font=("Arial", 10))
+ideas_text.pack(pady=10)
+
+# Lancer la boucle principale
+root.mainloop()
